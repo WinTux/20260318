@@ -2,3 +2,7 @@
 .terraform/
 *.tfstate
 *.tfstate.backup
+*.tfstate*
+crash.log
+aws/
+*.zip
