@@ -30,3 +30,13 @@ terraform apply
 terraform apply -auto-approve
 terraform destroy -auto-approve
 ```
+
+## Sobre variables
+Jerarquía (de menor a mayor):
+- Manuales: var.algo
+- Default (como en Ejemplo2)
+- Variables de entorno: TF_VAR_algo
+- Archivos terraform.tfvars / terraform.tfvars.json
+- Archivos *.tfvars: terraform apply -var-file=./misuperarchivodevariables.tfvars
+- Archivos *.auto.tfvars / *.auto.tfvars.json: Se cargan automáticamente
+- -var / -var-file
