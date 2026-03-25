@@ -6,5 +6,5 @@ variable "aws_region" {
 
 variable "nombres_servicios" {
   description = "Nombre de los repositorios de EC2"
-  type = set(string)
+  type        = set(string)
 }
