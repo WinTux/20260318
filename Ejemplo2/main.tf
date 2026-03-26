@@ -9,6 +9,9 @@ terraform {
 
 locals {
   nombre_workspace = terraform.workspace
+  ruta_private_key = "~/Descargas/ParaAnsible.pem"
+  nombre_key = "ParaAnsible"
+  usuario_ssh = "ubuntu"
 }
 
 provider "aws" {
@@ -29,11 +32,26 @@ resource "aws_instance" "mi_servidor" {
   subnet_id                   = module.vpc.public_subnets[0]
   vpc_security_group_ids      = [module.terraform-sg.security_group_id]
   associate_public_ip_address = true
+  key_name = local.nombre_key
   tags = {
     #Name        = "ServidorTerraform-${each.key}"
     Name = format("%s-%s",terraform.workspace,count.index)
     Environment = "Dev"
     Owner       = "Pepito"
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'Esperando conexión SSH en ${self.public_ip}'"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = local.usuario_ssh
+      private_key = file(local.ruta_private_key)
+      host        = self.public_ip
+      timeout = "5m"
+    }
+# Falta config a local
   }
 }
 
