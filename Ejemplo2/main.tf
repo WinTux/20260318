@@ -51,7 +51,9 @@ resource "aws_instance" "mi_servidor" {
       host        = self.public_ip
       timeout = "5m"
     }
-# Falta config a local
+  }
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ${self.public_ip}, --private-key ${local.ruta_private_key} ~/Documentos/DevOps/IaC_terraform/Ansible/nginx.yml"
   }
 }
 
