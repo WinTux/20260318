@@ -4,7 +4,8 @@ pipeline {
 		stage('Mi querido Checkout') {
 			steps {
 				git branch: 'main',
-				url: ''
+				url: 'https://github.com/WinTux/20260318.git',
+				credentialId: 'github-token'
 			}
 		}
 	}
