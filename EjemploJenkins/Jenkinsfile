@@ -4,9 +4,51 @@ pipeline {
 		stage('Mi querido Checkout') {
 			steps {
 				git branch: 'main',
-				url: 'https://github.com/WinTux/20260318.git',
+				url: 'https://github.com/WinTux/20260331.git',
 				credentialId: 'github-token'
 			}
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+pipeline {
+	agent any
+	stages {
+		stage('Comando de Terraform Apply') {
+			steps {
+				withCredentials([[
+				$class: 'AmazonWebServicesCredentialsBinding',
+				credentialsId: 'aws-credentials'
+				]]) {
+					sh '''
+					terraform init
+					terraform plan -out=tfplan
+					terraform apply -auto-approve tfplan
+					'''
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
